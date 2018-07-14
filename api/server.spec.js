@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const server = require('./server');
-const request = require('supertest');
 const Game = require('../games/Game');
+const request = require('supertest');
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -22,13 +22,16 @@ describe('The API Server', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
+
   beforeEach(async() => {
     let newGame = {
       title: 'Super Mario Bros',
       genre: 'Platform game',
       releaseDate: 'September 13, 1985'
     }
-    testGame = await Game.create(newGame);
+    testGame = Game.create(newGame);
+  
+    console.log('ID', testGame)
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
@@ -40,34 +43,34 @@ describe('The API Server', () => {
   });
 
   it('runs the tests', () => {});
-
-  // test the POST here
-  it('adds a document to the database', async() => { 
-    // const newGame = {
-    //   title: 'Super Mario Bros2',
-    //   genre: 'Platform game',
-    //   releaseDate: 'September 13, 1985'
-    // }
-    const response = await request(server)
-      .post('/api/games', newGame)
-      .expect(201)
-  })
-  // test the GET here
+// test the GET here
   it('has a GET endpoint that return 200', async() => {
     await request(server)
       .get('/api/games')
       .expect(200)
   })
 
-  // Test the DELETE here
-  it('should remove a game from the database', async() => {
+  // test the POST here
+  it('adds a document to the database', async() => { 
     const newGame = {
-      title: 'Super Mario Bros2',
+      title: 'Super Mario Bros3',
       genre: 'Platform game',
       releaseDate: 'September 13, 1985'
     }
-    console.log(newGame)
-    await request(server).delete('/api/games', newGame)
-      .expect(202)
+    const response = await request(server)
+      .post('/api/games')
+      .send(newGame)
+      .expect(201)
+  })
+  
+  // Test the DELETE here
+  it('should remove a game from the database', async() => {
+    // const deletedGame = {
+    //   title: 'Super Mario Bros3',
+    //   genre: 'Platform game',
+    //   releaseDate: 'September 13, 1985'
+    // }
+    await request(server).delete(`/api/games` + gameId)
+      .expect(204)
   })
 });
