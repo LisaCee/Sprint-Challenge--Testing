@@ -22,13 +22,13 @@ describe('The API Server', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async() => {
     let newGame = {
       title: 'Super Mario Bros',
       genre: 'Platform game',
       releaseDate: 'September 13, 1985'
     }
-    Game.create(newGame);
+    testGame = await Game.create(newGame);
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
@@ -43,12 +43,12 @@ describe('The API Server', () => {
 
   // test the POST here
   it('adds a document to the database', async() => { 
-    const newGame = {
-      title: 'Super Mario Bros2',
-      genre: 'Platform game',
-      releaseDate: 'September 13, 1985'
-    }
-    await request(server)
+    // const newGame = {
+    //   title: 'Super Mario Bros2',
+    //   genre: 'Platform game',
+    //   releaseDate: 'September 13, 1985'
+    // }
+    const response = await request(server)
       .post('/api/games', newGame)
       .expect(201)
   })
@@ -60,4 +60,14 @@ describe('The API Server', () => {
   })
 
   // Test the DELETE here
+  it('should remove a game from the database', async() => {
+    const newGame = {
+      title: 'Super Mario Bros2',
+      genre: 'Platform game',
+      releaseDate: 'September 13, 1985'
+    }
+    console.log(newGame)
+    await request(server).delete('/api/games', newGame)
+      .expect(202)
+  })
 });
