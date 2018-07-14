@@ -39,7 +39,7 @@ describe('The API Server', () => {
 
   afterEach(() => {
     //   // clear the games collection.
-    return Game.remove()
+    // return Game.remove()
   });
 
   it('runs the tests', () => {});
@@ -65,11 +65,14 @@ describe('The API Server', () => {
   
   // Test the DELETE here
   it('should remove a game from the database', async() => {
-    // const deletedGame = {
-    //   title: 'Super Mario Bros3',
-    //   genre: 'Platform game',
-    //   releaseDate: 'September 13, 1985'
-    // }
+   let newGame = {
+      title: 'Super Mario Bros',
+      genre: 'Platform game',
+      releaseDate: 'September 13, 1985'
+    }
+    testGame = Game.create(newGame);
+    let gameId = testGame._id;
+    console.log('ID', gameId)
     await request(server).delete(`/api/games` + gameId)
       .expect(204)
   })
