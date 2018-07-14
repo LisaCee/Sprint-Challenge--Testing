@@ -36,16 +36,15 @@ describe('The API Server', () => {
 
   afterEach(() => {
     //   // clear the games collection.
-    Game.remove({})
+    return Game.remove()
   });
 
   it('runs the tests', () => {});
 
   // test the POST here
-  it('adds a document to the database', async() => {
-    
+  it('adds a document to the database', async() => { 
     const newGame = {
-      title: 'Super Mario Bros',
+      title: 'Super Mario Bros2',
       genre: 'Platform game',
       releaseDate: 'September 13, 1985'
     }

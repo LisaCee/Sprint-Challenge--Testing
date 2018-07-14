@@ -20,5 +20,31 @@ describe('The Game Model', () => {
 
   it('runs the tests', () => {});
 
-  // test away!
+    it('contains a title field', async() => {
+        const mario = 
+          {title: 'Super Mario Bros',
+          genre: 'platform',
+          releaseDate: 'September 13, 1985'}
+
+          const newGame = await Game.create(mario);
+          expect(newGame.title).toBe('Super Mario Bros')
+    })
+    it('contains gives a genre field', async() => {
+        const mario = 
+          {title: 'Super Mario Bros',
+          genre: 'platform',
+          releaseDate: 'September 13, 1985'}
+
+          const newGame = await Game.create(mario);
+          expect(newGame.genre).toBe('platform')
+    })
+    it('returns game title when getGameTitle is called', async() => {
+      const mario = 
+          {title: 'Super Mario Bros',
+          genre: 'platform',
+          releaseDate: 'September 13, 1985'}
+
+          const newGame = await Game.create(mario);
+          expect(newGame.getGameTitle()).toBe('Super Mario Bros')
+    })
 });
